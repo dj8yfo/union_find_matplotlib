@@ -24,7 +24,8 @@ class RandomConnectionBag(object):
         self.union_to_work_with = union_to_work_with
 
         if self.union_to_work_with != None:
-            self.start_element_index = n_elements/2
+            self.beginning = n_elements/2
+            self.start_element_index = self.beginning
             self.radius = 1
 
         # print "ordered connections size: " + str(len(self.ordered_connections))
@@ -42,21 +43,23 @@ class RandomConnectionBag(object):
 
     def get_next_spiraled(self):
         from_element = self.start_element_index
-        y_f, x_f = self.union_to_work_with.array.index_map(from_element)
+        y_f, x_f = self.union_to_work_with.array.index_map(self.beginning)
 
         search = True
         to_element = None
-        for radius in range(1, self.union_to_work_with.array.size()):
+        while self.radius < self.union_to_work_with.array.size():
             if not search:
                 break
             candidates_for_radius = []
             growing_radius = []
-            for i in range(1, radius+1):
+            for i in range(1, self.radius+1):
                 for x_dif in range(-i, i+1):
                     for y_dif in range(-i, i+1):
                         to_element = None
                         y_s_candidate =  y_f + y_dif
                         x_s_candidate =  x_f + x_dif
+                        if (y_dif**2 + x_dif**2) > self.radius**2:
+                            continue
                         try:
                             to_element = self.union_to_work_with.array.get_index_by_coords(x_s_candidate, y_s_candidate)
                         except:
@@ -76,6 +79,8 @@ class RandomConnectionBag(object):
             if next_candidate != None:
                 search = False
                 to_element = next_candidate
+            else:
+                self.radius+=1
 
         if to_element != None:
             result = from_element, to_element
