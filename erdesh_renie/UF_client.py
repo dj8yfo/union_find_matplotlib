@@ -31,7 +31,7 @@ def new_experiment_sequence(new_grid, union_find, show_progress):
     connections = RandomConnectionBag(len(new_grid), union_find)
     iterations = 0
     max_num_of_random_connections =  len(new_grid)*3
-    period = 5
+    period = 10
     delay = False
     effective_iterations = 0
     while iterations < max_num_of_random_connections:
@@ -90,7 +90,7 @@ def new_experiment(new_grid, union_find, show_progress):
 # types_of_experiments = [WeightedQuickUnionUF, QuickUnionUF, QuickFindUF]
 types_of_experiments = [RankedQuickUnionUF]
 # for dimension in [5]:
-dimensions = [10]
+dimensions = [35]
 # dimensions = [5]
 times_execution = {}
 for type in types_of_experiments:
@@ -163,8 +163,8 @@ def animate():
     plt.show()
 
     print times_execution
-animate()
-# show_last_state()
+# animate()
+show_last_state()
 
 
 

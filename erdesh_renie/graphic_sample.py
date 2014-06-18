@@ -19,7 +19,6 @@ class GraphicGrid(object):
 
 
     def update_frame(self, framedata, patches, lines, redundant_lines,  axes):
-        axes.plot
         result = self.update_figures(self.representations[framedata], patches, lines, redundant_lines, axes)
         return result
 
